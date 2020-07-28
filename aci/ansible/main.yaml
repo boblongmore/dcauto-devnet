@@ -1,0 +1,27 @@
+---
+- name: Configure devnet fabric
+  hosts: devnet
+  connection: local
+  collections:
+  - cisco.aci
+  tasks:
+  - name: Add new tenant
+    aci_tenant:
+      hostname: "{{ devnet_apic }}"
+      username: "{{ ansible_username }}"
+      password: "{{ ansible_password }}"
+      validate_certs: no
+      tenant: bob-ansible-web
+      description: ansible_web
+      state: absent
+  - name: add new application profile
+    aci_ap:
+      host: "{{ devnet_apic }}"
+      username: "{{ ansible_username }}"
+      password: "{{ ansible_password }}"
+      validate_certs: no
+      tenant: bob-ansible-web
+      ap: bob-app-profile
+      description: bob app profile via ansible
+      state: absent
+    
